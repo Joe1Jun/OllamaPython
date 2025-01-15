@@ -1,7 +1,7 @@
 import ollama
 import os
 
-model = "llam3.2"
+model = "llama3.2"
 
 #paths to input and output files
 input_file = "./data/grocery_list.txt"
@@ -42,8 +42,11 @@ Please:
 try:
     # Attempt to generate a response from the Ollama model
     response = ollama.generate(model=model , prompt=prompt)
-
+    
     generated_text = response.get("response", " ")
+    print("========Categorized list========= ")
+    print(generated_text)
+
     # Open the output file in write mode, ensuring it gets closed after writing
     with open(output_file, "w") as f:
         f.write(generated_text.strip())
