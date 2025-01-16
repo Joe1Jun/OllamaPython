@@ -60,9 +60,26 @@ print("done splitting....")
 
 # Printing the number of chunks created by the splitting process.
 # This gives an idea of how many chunks the text has been divided into.
-print(f"Number of chunks: {len(chunks)}")
+#print(f"Number of chunks: {len(chunks)}")
 
 # Printing the first chunk as an example to visualize what the chunks look like.
 # This helps to verify the chunking process and gives a preview of the content.
-print(f"Example chunk: {chunks[1]}")
+#print(f"Example chunk: {chunks[1]}")
+
+#========Add to vector database =======
+# Import the ollama library to interact with the Ollama API
+import ollama
+
+# Pulls the pre-trained "nomic-embed-text" model from the Ollama API (ensures it's available locally)
+ollama.pull("nomic-embed-text")
+
+# Initialize a Chroma vector database and add the embeddings of the documents (chunks) to it
+vector_db = Chroma.from_documents(
+    documents=chunks,  # The list of documents (chunks) to be converted into embeddings
+    embedding=OllamaEmbeddings(model="nomic-embed-text"),  # Specifies the model to use for generating embeddings
+    collection_name="simple-rag"  # The name of the collection in the vector database
+)
+
+# Output a message indicating that the embeddings have been added to the vector database successfully
+print("done adding to vector database")
 
